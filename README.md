@@ -1,21 +1,41 @@
-## MIMI
+## MEEMI
 
 To run this project, you need:
 
-1. Foundry
-2. Rust
+1. Hardhat
 
-## Installation
+Steps:
 
-Download the Oppenzeppelin codebase into your project using the command below:
+1. yarn install
+2. npx hardhat compile
+3. npx hardhat run scripts/deploy/deploy.js --network sepolia
 
-```bash
-forge install OpenZeppelin/openzeppelin-contracts --no-commit
-```
+## Deployed Contracts Address
 
-## About MIMI
+AccountLogic contract: 0xE30d7af6539c44C7fbA43F0e3a27DdADF5c3f606
+AccountProxy contract: 0xb23E13b3aF0e0D16AD9BCd4E2aaD91223D554dD0
+MarketPlace contract: 0x80179ec56C1DE15d93aC837c1bA8d7E44510a587
+Profiles contract: 0x32a665006838c380138585AED44a871fb80F7514
+InsurancePolicyFactory contract: 0xefDAbA3fE82Db29Cd4bD180C08eFE000924F215F
+ClaimsAutomatic contract: 0x010B3c189B0Bf9d4B24eb684477c7D1e56F14D19
 
-MVP Breakdown for the AI-Powered Micro-Insurance Marketplace
+## About MEEMI
+
+Meemi is a Web3, AI-based, micro-insurance platform allowing users to purchase short-term, on-demand insurance for day-to-day objects and occurrences e.g., electronics, bags, and journeys. The platform is highly coupled with a decentralized e-commerce platform such that users do not only purchase physical items but also insure the same at checkout in real-time.
+
+Insurance policies are powered by smart contracts and are directly associated with particular goods purchased in the market. The contracts automate the policy life cycle, from purchase and payment, through claims and payouts, and ensure transparency, efficiency, and trust. Users connect to the platform via their Web3 wallets (MetaMask, WalletConnect) and pay with stablecoins or native cryptocurrency.
+Risk-based premium pricing is dynamically calculated through a lean AI model that analyzes basic user inputs and categorizes them as low, medium, or high risk. Claims are verified through external APIs (e.g., flight delay APIs), with qualifying claims automatically settling through the blockchain.
+Meemi is user-centric and simple to use with a clean, mobile-first experience enabling users to:
+
+- Browse items that are insurable
+- See policy terms and dynamic pricing
+- Purchase insurance as part of product purchases
+- Automate payment and tracking of claims
+  The product is ideal for modern users who require rapid, trustless protection of digital assets and physical goods.
+
+## MVP Breakdown For MIMI
+
+MVP Breakdown for the "**AI-Powered Micro-Insurance Marketplace**"
 Key Features of the MVP:
 Basic Insurance Marketplace:
 
