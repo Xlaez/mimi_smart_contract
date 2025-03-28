@@ -156,6 +156,60 @@ contract InsurancePolicyTest is Test {
         vm.prank(insured);
         policy.processPayout();
     }
+
+    function testCreatePolicyForMarketplaceItem() public {
+        address policyAddress = factory.createPolicyForMarketplaceItem(
+            insured,
+            insurer,
+            premium,
+            coverageAmount,
+            duration,
+            policyType,
+            address(0),
+            itemId
+        );
+        assertEq(factory.getPolicyByItemId(itemId), policyAddress);
+    }
+
+    function testFailCreatePolicyForUnsoldItem() public {
+        // Override to return unsold item
+        vm.mockCall(
+            address(marketplace),
+            abi.encodeWithSelector(marketplace.fetchItemsById.selector, itemId),
+            abi.encode(1, "Item", 1, premium, "img", "desc", block.timestamp, false, 3, address(0x999), false)
+        );
+
+        factory.createPolicyForMarketplaceItem(
+            insured,
+            insurer,
+            premium,
+            coverageAmount,
+            duration,
+            policyType,
+            address(0),
+            itemId
+        );
+    }
+
+    function testFailCreatePolicyBySeller() public {
+        // Override to return seller == msg.sender (owner)
+        vm.mockCall(
+            address(marketplace),
+            abi.encodeWithSelector(marketplace.fetchItemsById.selector, itemId),
+            abi.encode(1, "Item", 1, premium, "img", "desc", block.timestamp, false, 3, owner, true)
+        );
+
+        factory.createPolicyForMarketplaceItem(
+            payable(owner),
+            insurer,
+            premium,
+            coverageAmount,
+            duration,
+            policyType,
+            address(0),
+            itemId
+        );
+    }
 }
 
 interface IIInsurancePolicy {
