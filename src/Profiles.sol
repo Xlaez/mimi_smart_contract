@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import "../lib/openzeppelin-contracts/contracts/utils/cryptography/EIP712.sol";
+import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 import {IAccountProxy} from "./interfaces/IImplementation.sol";
 
 contract Profile is EIP712 {
