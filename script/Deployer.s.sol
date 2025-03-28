@@ -3,7 +3,7 @@ pragma solidity ^0.8.13;
 
 import {Script, console} from "forge-std/Script.sol";
 
-// Contracts
+// Contracts (update these import paths as needed)
 import "../src/Items.sol";
 import "../src/InsurancePolicy.sol";
 import "../src/Profiles.sol";
@@ -18,36 +18,36 @@ contract Deployer is Script {
         // Load private key
         string memory privateKeyStr = vm.envString("PRIVATE_KEY");
         uint256 privateKey = vm.parseUint(privateKeyStr);
+        
+        // Start broadcast with the private key
         vm.startBroadcast(privateKey);
 
+        // Get the deployer address
         address deployer = vm.addr(privateKey);
+        console.log("Deployer address:", deployer);
 
+        // Deploy contracts
         AccountLogic logic = new AccountLogic();
-        console.log("Logic deployed at:", address(logic));
+        console.log("AccountLogic deployed at:", address(logic));
 
         bytes memory initData = abi.encodeWithSignature(
             "initialize(address,string)",
-            msg.sender,
-            "Initial Data"
+            deployer,
+            "Initial Setup"
         );
 
-        // Deploy Marketplace
+        AccountProxy proxy = new AccountProxy(address(logic), initData);
+        console.log("AccountProxy deployed at:", address(proxy));
+
         MarketPlace marketplace = new MarketPlace(payable(deployer));
         console.log("MarketPlace deployed at:", address(marketplace));
 
-        // Deploy InsurancePolicyFactory with marketplace address
         InsurancePolicyFactory policyFactory = new InsurancePolicyFactory(address(marketplace));
         console.log("InsurancePolicyFactory deployed at:", address(policyFactory));
 
-        // Deploy ClaimsAutomation
         ClaimsAutomation automation = new ClaimsAutomation();
         console.log("ClaimsAutomation deployed at:", address(automation));
 
-        // Deploy proxy contract
-        AccountProxy proxy = new AccountProxy(address(logic), initData);
-        console.log("Proxy deployed at:", address(proxy));
-
-        // Deploy Profile contract
         Profile profile = new Profile(address(proxy));
         console.log("Profile contract deployed at:", address(profile));
 
