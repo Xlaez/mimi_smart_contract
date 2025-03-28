@@ -118,7 +118,7 @@ contract ProfileTest is Test {
         ); // Onboard anotherUser first
 
         vm.prank(anotherUser);
-        vm.expectRevert("Not authorized");
+        vm.expectRevert("Not a registered user");
         profile.updateUserProfile("https://image.com/hacker.png", 1);
     }
 
