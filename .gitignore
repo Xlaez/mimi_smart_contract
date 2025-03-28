@@ -16,3 +16,7 @@ docs/
 .env
 
 node_modules
+artifacts
+cache/
+typechain/
+coverage/
